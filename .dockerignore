@@ -1,0 +1,64 @@
+# .dockerignore
+#------------------------------------------------------------------------------#
+# https://docs.docker.com/engine/reference/builder/#dockerignore-file
+#------------------------------------------------------------------------------#
+# Don't send things you don't need to Docker server.
+# Don't upload secrets / keys!
+#
+# RULES:
+# - .dockerignore must be at top-level root context from which you
+#   invoke 'docker image build' or 'docker compose' commands.
+# - .dockerignore affects both ADD and COPY commands.
+# - .dockerignore doesn't match basenames like '.gitignore'
+#   so you need to prefix **/ for recursive matching to be safe
+# - Last Match Wins - you must put more specific whitelisting matches
+#   after the general exclusion pattern
+#------------------------------------------------------------------------------#
+
+# Ignore all hidden files and directories.
+**/.*
+
+# Docker specific
+# ===============
+
+# still sent to the daemon as needed to do the job but aren't included in the image by ADD/COPY . commands
+**/.dockerignore
+**/Dockerfile
+**/docker-compose.yml
+
+*_docker_*/
+
+# Ignore these folders.
+# We don't ignore the logs folder because it cuts some lines from the Dockerfile.
+.git/
+.idea/
+.venv/
+__pycache__/
+attic/
+dist/
+**/logs/
+**/vendor/
+**/venv/
+**/.venv/
+
+# Ignore these files.
+**/*.log
+**/*.log.*
+**/log-*
+MANIFEST.in
+pyproject.toml
+README.rst
+requirements.txt
+setup.cfg
+
+# Allowlist - must come after the more general blocklist pattern * above as Last Match Wins
+
+# always include package.json and requirements.txt for standard dependency installations on NodeJS and Python
+!package.json
+!requirements.txt
+!LICENSE
+
+# supersede the "all dotfiles" ignore rule from the top.
+!.bashrc
+!README.md
+!README.rst

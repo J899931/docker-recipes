@@ -1,0 +1,33 @@
+services:
+  sftp:
+    build: .
+    image: library:latest
+    container_name: usftp
+    domainname: localhost
+    hostname: usftp
+    restart: unless-stopped
+    stop_grace_period: 1m
+    networks:
+      net:
+        ipv4_address: 10.0.0.2
+    ports:
+      - target: 22
+        published: 22
+        protocol: tcp
+        mode: host
+    expose:
+      - 22
+    tty: true
+    stdin_open: true
+
+networks:
+  net:
+    name: net
+    driver: bridge
+    driver_opts:
+      enable_ipv4: true
+      enable_ipv6: false
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/24
