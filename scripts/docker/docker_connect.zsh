@@ -1,10 +1,13 @@
 #!/usr/bin/env zsh
 
-repo=""
-name="dcron"
+project_dir="${HOME}/projects/docker-recipes"
+dockerfile="Dockerfile"
+dockerfilepath="${project_dir}/${dockerfile}"
+
+name="deb_basic"
 tag="latest"
 nametag="${name}:${tag}"
-container="crondock"
+container="basic_box"
 
 # Check if container is running then stop it.
 if [[ $(docker container ls --filter status=stopped --filter name=$container --format='true') ]]; then
